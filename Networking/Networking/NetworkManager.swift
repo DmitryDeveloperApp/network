@@ -24,7 +24,6 @@ class NetworkManager {
     }
     private let baseURL = "http://jsonplaceholder.typicode.com/"
     
-    
     func getAllPosts(_ complitionHandler: @escaping ([Post])-> Void) {
         if let url = URL(string: baseURL + APIs.posts.rawValue) {
          
@@ -91,6 +90,6 @@ class NetworkManager {
                 
                 complitionHander(posts ?? [])
             }
-        }
+        }.resume()
     }
 }

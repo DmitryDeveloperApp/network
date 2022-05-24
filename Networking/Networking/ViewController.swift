@@ -31,12 +31,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        networkManager.getAllPosts { [weak self] (posts) in
+//        networkManager.getAllPosts { [weak self] (posts) in
+//            DispatchQueue.main.async {
+//                self?.posts = posts
+//            }
+//        }
+        
+        networkManager.getPostBy(userId: 3) { [weak self] (posts) in
             DispatchQueue.main.async {
                 self?.posts = posts
             }
         }
-
+        
     }
     @IBAction func createPost(_ sender: Any) {
 
