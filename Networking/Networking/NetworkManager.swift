@@ -76,5 +76,21 @@ class NetworkManager {
             
         }.resume()
     }
-    
+    func getPostBy(userId: Int, complitionHander: @escaping ([Post])->Void) {
+        guard let url = URL(string: baseURL + APIs.posts.rawValue) else { return}
+        
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        components?.queryItems = [URLQueryItem(name: "userId", value: "\(userId)")]
+        
+        guard let queryURL = components?.url else {return}
+        URLSession.shared.dataTask(with: queryURL) { data, response, error in
+            if error != nil {
+                print("Error getPostBy")
+            } else if let resp = response as? HTTPURLResponse, resp.statusCode == 200, let reciveData = data {
+                let posts = try? JSONDecoder().decode([Post].self, from: reciveData)
+                
+                complitionHander(posts ?? [])
+            }
+        }
+    }
 }
